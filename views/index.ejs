@@ -11,6 +11,7 @@
     <!-- libraries -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script>
 
     <!-- Templates -->
     <script type = "text/ng-template" id = "/todos.html">
@@ -32,22 +33,18 @@
 
     <!-- js script -->
     <script>
-      angular.module('myApp', ['ngRoute'])
+      angular.module('myApp', ['ngRoute', 'ngResource'])
 
       // Services
-      .factory('Todos', ['$http', function($http) {
-        return $http.get('/todos');
+      .factory('Todos', ['$resource', function($resource) {
+        return $resource('/todos/:id', null, {
+          'update': { method:'PUT'}
+        });
       }])
 
       // Controllers
       .controller('TodoController', ['$scope', 'Todos', function ($scope, Todos) {
-        Todos.success(function(data) {
-          $scope.todos = data;
-        })
-        .error(function(data, status) {
-          console.log(data, status);
-          $scope.todos = [];
-        });
+        $scope.todos = Todos.query();
       }])
 
       .controller('TodoDetailCtrl', ['$scope', '$routeParams', 'Todos', function ($scope, $routeParams, Todos) {
