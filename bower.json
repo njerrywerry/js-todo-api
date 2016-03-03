@@ -1,0 +1,20 @@
+{
+  "name": "todoApp",
+  "version": "0.0.0",
+  "homepage": "https://github.com/njerrywerry/js-todo-api",
+  "authors": [
+    "Sylvia <sylviakieha@gmail.com>"
+  ],
+  "description": "Todo app",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6"
+  }
+}

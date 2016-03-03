@@ -1,11 +1,29 @@
 <!DOCTYPE html>
-<html ng-app = "myApp">
+<html lang = "en" ng-app = "myApp">
   <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+    <link href = "http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel = "stylesheet">
+    <link rel='stylesheet' href='stylesheets/style.css'>
   </head>
   <body>
-    <h1><%= title %></h1>
+    <div class = "navbar navbar-default">
+      <div class = "container-fluid">
+        <div class = "navbar-header">
+          <h1><%= title %></h1>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <form class = "navbar-form navbar-right" role = "search">
+            <input type = "text" class="form-control" placeholder="Search" ng-model = "search.name">
+          </form>
+        </div>
+      </div>
+    </div>
 
     <ng-view></ng-view>
     <!-- libraries -->
@@ -15,33 +33,44 @@
 
     <!-- Templates -->
     <script type = "text/ng-template" id = "/todos.html">
-      Search: <input type = "text" ng-model = "search.name">
-      <ul>
-        Stuff To Do
-        <li ng-repeat = "todo in todos | filter: search">
-          <input type = "checkbox" ng-model = "todo.completed" ng-change = "update($index)">
-          <a ng-show = "!editing[$index]" href = "#/{{todo._id}}">{{ todo.name }}</a>
-          <button ng-show = "!editing[$index]" ng-click = "edit($index)">edit</button>
-          <button ng-show = "!editing[$index]" ng-click = "remove($index)">remove</button>
 
-          <input ng-show = "editing[$index]" type = "text" ng-model = "todo.name">
-          <button ng-show = "editing[$index]" ng-click = "update($index)">Update</button>
-          <button ng-show = "editing[$index]" ng-click = "cancel($index)">Cancel</button>
-        </li>
-      </ul>
-      New task
-      <input type = "text" ng-model = "newTodo">
-      <button ng-click = "save()">Create</button>
+      <div class = "panel panel-default">
+        <div class = "panel-heading">Stuff To Do</div>
+          <ul class = "list-group">
+            <li class = "list-group-item" ng-repeat = "todo in todos | filter: search">
+              <input type = "checkbox" ng-model = "todo.completed" ng-change = "update($index)">
+              <a ng-show = "!editing[$index]" href = "#/{{todo._id}}">{{ todo.name }}</a>
+              <button type = "button" class = "btn btn-primary" ng-show = "!editing[$index]" ng-click = "edit($index)">edit</button>
+              <button type = "button" class = "btn btn-primary" ng-show = "!editing[$index]" ng-click = "remove($index)">remove</button>
+
+              <input ng-show = "editing[$index]" type = "text" ng-model = "todo.name">
+              <button type = "button" class = "btn btn-primary" ng-show = "editing[$index]" ng-click = "update($index)">Update</button>
+              <button type = "button" class = "btn btn-primary" ng-show = "editing[$index]" ng-click = "cancel($index)">Cancel</button>
+            </li>
+          </ul>
+        </div>
+
+        <div class="well well-lg">
+        New task
+        <input type = "text" ng-model = "newTodo">
+        <button type = "button" class = "btn btn-primary" ng-click = "save()">Create</button>
+        </div>
     </script>
 
     <script type = "text/ng-template" id = "/todoDetails.html">
-      <h1>{{ todo.name }}</h1>
-      completed: <input type = "checkbox" ng-model = "todo.completed"><br>
-      note: <textarea ng-model = "todo.note">{{ todo.note }}</textarea><br><br>
+    <div class = "panel panel-primary">
+      <div class = "panel-heading">
+        <h1 class="panel-title">{{ todo.name }}</h1>
+      </div>
+      <div class = "panel-body">
+        completed: <input type = "checkbox" ng-model = "todo.completed"><br>
+        note: <textarea ng-model = "todo.note">{{ todo.note }}</textarea><br><br>
 
-      <button ng-click = "update()">Update</button>
-      <button ng-click = "remove()">Remove</button>
-      <a href="/">Cancel</a>
+        <button type = "button" class = "btn btn-primary" ng-click = "update()">Update</button>
+        <button type = "button" class = "btn btn-primary" ng-click = "remove()">Remove</button>
+        <a href="/">Cancel</a>
+        </div>
+      </div>
     </script>
 
     <!-- js script -->
@@ -123,6 +152,8 @@
         });
       }]);
     </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
   </body>
 </html>
